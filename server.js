@@ -10,13 +10,10 @@ const io = socketio(server)
 io.on('connection', (socket)=>{
     console.log('Connected with socket id = ',socket.id)
 
-    socket.on('boom',()=>{
-        console.log('Boom received from ', socket.id)
+    socket.on('msg_send',(data)=>{
+         // console.log('received ',data.msg)
+         io.emit('msg_rcvd',data)
     })
-    
-    setInterval(()=>{
-        socket.emit('whizz')
-    },2000) 
 })
 
 app.use('/', express.static(__dirname + '/public'))

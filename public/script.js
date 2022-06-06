@@ -1,12 +1,17 @@
 let socket = io()
 
-let boomBtn = document.getElementById('boom')
-boomBtn.onclick = function(){
-    socket.emit('boom')
-}
+let inpMsg = document.getElementById('inpMsg')
+let btnSend = document.getElementById('btnSend')
+let ulMsgList = document.getElementById('ulMsgList')
 
-socket.on('whizz',()=>{
-    let div = document.createElement('div')
-    div.innerText = 'whizz'
-    document.body.appendChild(div) 
+btnSend.onclick = function(){
+    socket.emit('msg_send',{
+        msg: inpMsg.value
+    })
+    inpMsg.value
+}
+socket.on('msg_rcvd',(data)=>{
+    let liNewMsg = document.createElement('li')
+    liNewMsg.innerText = data.msg
+    ulMsgList.appendChild(liNewMsg)
 })
