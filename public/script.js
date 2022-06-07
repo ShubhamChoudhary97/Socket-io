@@ -1,17 +1,33 @@
 let socket = io()
 
-let inpMsg = document.getElementById('inpMsg')
-let btnSend = document.getElementById('btnSend')
-let ulMsgList = document.getElementById('ulMsgList')
+$('#loginBox').show()
+$('#chatBox').hide()
 
-btnSend.onclick = function(){
-    socket.emit('msg_send',{
-        msg: inpMsg.value
+$('#btnStart').click(()=>{
+    socket.emit('login',{
+        username: $('#inpUsername').val(),
+        password: $('#inpPassword').val()
     })
-    inpMsg.value
-}
+})
+
+socket.on('logged_in',()=>{
+    $('#loginBox').hide()
+    $('#chatBox').show()
+})
+
+socket.on('login_failed',()=>{
+    window.alert('Username or Password is incorrect')
+})
+
+$('#btnSendMsg').click(()=>{
+    socket.emit('msg_send',{
+        to: $('#inpToUser').val(),
+        msg: $('#inpNewMsg').val()
+    })
+})
+
 socket.on('msg_rcvd',(data)=>{
-    let liNewMsg = document.createElement('li')
-    liNewMsg.innerText = data.msg
-    ulMsgList.appendChild(liNewMsg)
+    $('#ulMsgs').append($('<li></li>').text(
+        `[${data.from}]:${data.msg}`
+    ))
 })

@@ -11,9 +11,16 @@
 </head>
 <body>
     <h1>Socket.io Sample</h1>
-    <input id="inpMsg">
-    <button id="btnSend">SEND</button>
-
-    <ul id="ulMsgList"></ul>
+    <div id="loginBox">
+       <input id="inpUsername" placeholder="Username">
+       <input id="inpPassword" type="password" placeholder="Password">
+       <button id="btnStart">START</button>
+    </div>
+    <div id="chatBox">
+        <input id="inpToUser" placeholder="Send to (default everyone)">
+       <input id="inpNewMsg" placeholder="New Message">
+       <button id="btnSendMsg">SEND</button>
+       <ul id="ulMsgs"></ul>
+    </div>
 </body>
 </html>
